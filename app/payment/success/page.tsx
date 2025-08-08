@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,7 +11,6 @@ import Header from "@/components/Header"
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
-  const [email, setEmail] = useState<string>("")
 
   useEffect(() => {
     if (sessionId) {

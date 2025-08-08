@@ -2,7 +2,6 @@
 
 import { Video } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   onFeatureClick?: () => void;
@@ -11,7 +10,6 @@ interface HeaderProps {
 }
 
 export default function Header({ onFeatureClick, onAboutClick, onLoginClick }: HeaderProps) {
-  const router = useRouter();
 
   const handleFeatureClick = () => {
     console.log("Features clicked");
