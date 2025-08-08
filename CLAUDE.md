@@ -4,12 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 application using TypeScript with the following key technologies:
-- **Styling**: Tailwind CSS v4 with CSS variables and custom theme configuration
-- **Components**: Shadcn UI components with New York style theme
-- **Animations**: Framer Motion and tw-animate-css
-- **Utilities**: class-variance-authority (CVA) for component variants, clsx + tailwind-merge via `cn()` utility
-- **Validation**: Zod for schema validation
+AlperMeet - A Google Meet clone built with Next.js 15, TypeScript, and modern web technologies. The application provides video conferencing capabilities with a clean, modern UI.
+
+### Tech Stack
+- **Framework**: Next.js 15 with App Router and Turbopack
+- **Language**: TypeScript with strict mode
+- **Styling**: Tailwind CSS v4 with CSS variables and OKLCH color space
+- **UI Components**: Shadcn UI (New York theme) + Radix UI primitives
+- **Animations**: Framer Motion + tw-animate-css
+- **Forms**: React Hook Form with Zod validation
+- **Payments**: Stripe integration for subscription plans
 - **Icons**: Lucide React
 
 ## Development Commands
@@ -24,45 +28,72 @@ npm run build
 # Start production server  
 npm start
 
-# Linting
+# Linting with ESLint
 npm run lint
 ```
 
-## Architecture Patterns
+## Application Architecture
 
-### Project Structure
-- **App Router**: Uses Next.js 15 App Router in `/app` directory
-- **Path Aliases**: `@/*` maps to project root for clean imports
-- **Styling**: Global styles in `app/globals.css` using Tailwind CSS v4's new @theme directive
-- **Utilities**: Common utilities like `cn()` in `lib/utils.ts`
+### Route Structure
+- `/` - Homepage with meeting controls and feature showcase
+- `/contact` - Contact form with validation
+- `/payment` - Stripe payment plans and checkout
+- `/payment/success` - Post-payment success page
+- `/payment/cancel` - Payment cancellation page
+- `/api/create-checkout-session` - Stripe checkout API endpoint
 
-### Component Guidelines
-- Shadcn UI components should be placed in `components/ui/` directory
-- Use the `cn()` utility from `@/lib/utils` for merging className props with component styles
-- Follow Shadcn's New York style theme as configured in `components.json`
+### Component Architecture
+- **Server Components**: Default for pages (`app/page.tsx`)
+- **Client Components**: Interactive components in `/components` directory
+  - `Header.tsx` - Navigation with links to all pages
+  - `MeetingControls.tsx` - Meeting creation/join functionality
+  - `FeaturesSection.tsx` - Animated feature cards
+- **UI Components** (`/components/ui/`): Reusable Shadcn components
+  - Form components (input, textarea, label)
+  - Button with variants
+  - Card components
 
-### TypeScript Configuration
-- Strict mode enabled
-- Module resolution set to "bundler" for Next.js compatibility
-- JSON imports enabled via `resolveJsonModule`
+### State Management Pattern
+- Client-side state with React hooks for UI interactions
+- Form state managed by React Hook Form
+- No global state management (consider adding if app grows)
 
-### CSS Architecture
-- Uses Tailwind CSS v4 with PostCSS
-- Custom CSS properties for theming with light/dark mode support
-- OKLCH color space for improved color consistency
-- Design tokens defined as CSS variables (--radius, --background, etc.)
+### Styling Patterns
+- Utility-first with Tailwind CSS v4
+- CSS variables for theming (`--tw-color-*` for animations)
+- `cn()` utility for conditional classes (`lib/utils.ts`)
+- Responsive design with Tailwind breakpoints
 
-## Key Development Notes
+### Form Handling
+- React Hook Form for form state
+- Zod schemas for validation (`lib/validations/`)
+- Server-side form processing where applicable
 
-1. **Font System**: Uses Geist and Geist Mono fonts with CSS variables `--font-geist-sans` and `--font-geist-mono`
+## Important Implementation Details
 
-2. **Dark Mode**: Implemented via `.dark` class with corresponding CSS variable overrides
+### Client vs Server Components
+- Use `"use client"` directive for components with:
+  - Framer Motion animations
+  - React hooks (useState, useEffect)
+  - Event handlers (onClick, onChange)
+  - Browser-only APIs
 
-3. **Component Library Setup**: Shadcn UI is configured but no components are installed yet. Use the Shadcn CLI to add components as needed.
+### Stripe Integration
+- Environment variable needed: `STRIPE_SECRET_KEY`
+- Test mode keys for development
+- Webhook handling for production (not yet implemented)
 
-4. **Type Safety**: Strict TypeScript enabled - ensure all new code includes proper type annotations
+### Accessibility
+- All interactive elements have aria-labels
+- Keyboard navigation support
+- Focus states defined
+- Semantic HTML structure
 
-5. **Build Output**: Next.js build outputs to `.next/` directory (gitignored)
+### Performance Considerations
+- Turbopack for faster development builds
+- Component code splitting automatic with App Router
+- Images optimized with Next.js Image component
+- Fonts loaded with next/font
 
 ## Git Workflow
 
