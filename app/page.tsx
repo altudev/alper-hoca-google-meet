@@ -1,103 +1,246 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { Video, VideoOff, Mic, MicOff, Calendar, Plus, Keyboard } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [meetingCode, setMeetingCode] = useState("");
+  const [isCameraOn, setIsCameraOn] = useState(true);
+  const [isMicOn, setIsMicOn] = useState(true);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border/40">
+        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Video className="h-8 w-8 text-primary" />
+            <span className="text-xl font-semibold">AlperMeet</span>
+          </div>
+          <nav className="flex items-center gap-6">
+            <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Özellikler
+            </button>
+            <button className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Hakkında
+            </button>
+            <button className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">
+              Giriş Yap
+            </button>
+          </nav>
         </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="container mx-auto px-4 py-16">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column - Meeting Controls */}
+          <motion.div 
+            className="space-y-8"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div>
+              <motion.h1 
+                className="text-5xl font-bold tracking-tight mb-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                Video toplantıları.
+                <br />
+                <span className="text-primary">Herkes için.</span>
+              </motion.h1>
+              <motion.p 
+                className="text-lg text-muted-foreground"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                Güvenli, yüksek kaliteli video toplantılarla bağlantıda kalın.
+                Ücretsiz ve kolay kullanım.
+              </motion.p>
+            </div>
+
+            {/* Meeting Actions */}
+            <motion.div 
+              className="space-y-4"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="flex gap-3">
+                <motion.button 
+                  className="flex-1 bg-primary text-primary-foreground rounded-xl px-6 py-3 font-medium hover:bg-primary/90 transition-all hover:scale-[1.02] flex items-center justify-center gap-2"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Plus className="w-5 h-5" />
+                  Yeni toplantı
+                </motion.button>
+                <div className="flex-1 relative">
+                  <input
+                    type="text"
+                    placeholder="Kod veya bağlantı girin"
+                    value={meetingCode}
+                    onChange={(e) => setMeetingCode(e.target.value)}
+                    className="w-full px-4 py-3 rounded-xl border border-input bg-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all pr-10"
+                  />
+                  <Keyboard className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                </div>
+              </div>
+              <motion.button 
+                className={`w-full py-3 rounded-xl font-medium transition-all ${
+                  meetingCode 
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-[1.02]" 
+                    : "bg-muted text-muted-foreground cursor-not-allowed"
+                }`}
+                disabled={!meetingCode}
+                whileHover={meetingCode ? { scale: 1.02 } : {}}
+                whileTap={meetingCode ? { scale: 0.98 } : {}}
+              >
+                Katıl
+              </motion.button>
+            </motion.div>
+
+            {/* Quick Actions */}
+            <motion.div 
+              className="flex gap-4 pt-4 border-t border-border/40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <button className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
+                <Calendar className="w-4 h-4" />
+                Toplantı planla
+              </button>
+            </motion.div>
+          </motion.div>
+
+          {/* Right Column - Preview */}
+          <motion.div 
+            className="relative"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <motion.div 
+              className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl overflow-hidden relative shadow-2xl"
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <motion.div 
+                    className="w-24 h-24 bg-slate-700 rounded-full mx-auto mb-4 flex items-center justify-center"
+                    animate={{ 
+                      boxShadow: [
+                        "0 0 0 0 rgba(148, 163, 184, 0.4)",
+                        "0 0 0 20px rgba(148, 163, 184, 0)",
+                      ]
+                    }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Video className="w-12 h-12 text-slate-400" />
+                  </motion.div>
+                  <p className="text-white/80">Kamera önizlemesi</p>
+                </div>
+              </div>
+              
+              {/* Preview Controls */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                <motion.button
+                  onClick={() => setIsCameraOn(!isCameraOn)}
+                  className={`p-3 rounded-full transition-all ${
+                    isCameraOn 
+                      ? "bg-white/10 hover:bg-white/20 text-white" 
+                      : "bg-red-500 hover:bg-red-600 text-white"
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {isCameraOn ? <Video className="w-5 h-5" /> : <VideoOff className="w-5 h-5" />}
+                </motion.button>
+                <motion.button
+                  onClick={() => setIsMicOn(!isMicOn)}
+                  className={`p-3 rounded-full transition-all ${
+                    isMicOn 
+                      ? "bg-white/10 hover:bg-white/20 text-white" 
+                      : "bg-red-500 hover:bg-red-600 text-white"
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  {isMicOn ? <Mic className="w-5 h-5" /> : <MicOff className="w-5 h-5" />}
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Features Section */}
+        <motion.div 
+          className="mt-24 grid md:grid-cols-3 gap-8"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+        >
+          <motion.div 
+            className="text-center space-y-3"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <motion.div 
+              className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Video className="w-8 h-8 text-primary" />
+            </motion.div>
+            <h3 className="font-semibold text-lg">HD Video Kalitesi</h3>
+            <p className="text-sm text-muted-foreground">
+              Kristal netliğinde görüntü ve ses kalitesi ile toplantılarınızı gerçekleştirin.
+            </p>
+          </motion.div>
+          <motion.div 
+            className="text-center space-y-3"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <motion.div 
+              className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Calendar className="w-8 h-8 text-primary" />
+            </motion.div>
+            <h3 className="font-semibold text-lg">Kolay Planlama</h3>
+            <p className="text-sm text-muted-foreground">
+              Toplantılarınızı önceden planlayın ve katılımcılarla paylaşın.
+            </p>
+          </motion.div>
+          <motion.div 
+            className="text-center space-y-3"
+            whileHover={{ y: -5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <motion.div 
+              className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto"
+              whileHover={{ rotate: 360 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Plus className="w-8 h-8 text-primary" />
+            </motion.div>
+            <h3 className="font-semibold text-lg">Anında Başlat</h3>
+            <p className="text-sm text-muted-foreground">
+              Kayıt olmadan hemen toplantı başlatın ve arkadaşlarınızı davet edin.
+            </p>
+          </motion.div>
+        </motion.div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
