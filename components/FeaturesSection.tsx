@@ -1,3 +1,5 @@
+"use client";
+
 import { Video, Calendar, Plus } from "lucide-react";
 import { motion } from "framer-motion";
 
