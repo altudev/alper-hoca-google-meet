@@ -1,6 +1,8 @@
 "use client";
 
 import { Video } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface HeaderProps {
   onFeatureClick?: () => void;
@@ -9,6 +11,8 @@ interface HeaderProps {
 }
 
 export default function Header({ onFeatureClick, onAboutClick, onLoginClick }: HeaderProps) {
+  const router = useRouter();
+
   const handleFeatureClick = () => {
     console.log("Features clicked");
     onFeatureClick?.();
@@ -36,10 +40,10 @@ export default function Header({ onFeatureClick, onAboutClick, onLoginClick }: H
   return (
     <header className="border-b border-border/40">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <Video className="h-8 w-8 text-primary" aria-hidden="true" />
           <span className="text-xl font-semibold">AlperMeet</span>
-        </div>
+        </Link>
         <nav className="flex items-center gap-6" aria-label="Ana navigasyon">
           <button 
             onClick={handleFeatureClick}
@@ -48,6 +52,20 @@ export default function Header({ onFeatureClick, onAboutClick, onLoginClick }: H
           >
             Özellikler
           </button>
+          <Link 
+            href="/payment"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Ödeme planları sayfasına git"
+          >
+            Planlar
+          </Link>
+          <Link 
+            href="/contact"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="İletişim sayfasına git"
+          >
+            İletişim
+          </Link>
           <button 
             onClick={handleAboutClick}
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
