@@ -63,3 +63,38 @@ npm run lint
 4. **Type Safety**: Strict TypeScript enabled - ensure all new code includes proper type annotations
 
 5. **Build Output**: Next.js build outputs to `.next/` directory (gitignored)
+
+## Git Workflow
+
+**IMPORTANT**: After completing any task, you MUST automatically commit and push changes to the repository using the following workflow:
+
+1. Always check `git status` first to see what has changed
+2. Stage all relevant changes with `git add`
+3. Create descriptive commit messages that explain what was done
+4. Push changes to the remote repository
+5. If working on a feature branch, create a pull request using `gh pr create`
+
+### GitHub CLI Commands
+
+```bash
+# Check current branch and status
+git status
+git branch
+
+# Commit and push changes
+git add .
+git commit -m "feat: descriptive message about changes"
+git push origin main
+
+# For feature branches and pull requests
+git checkout -b feature/branch-name
+git push -u origin feature/branch-name
+gh pr create --title "PR Title" --body "Description of changes"
+
+# View and manage pull requests
+gh pr list
+gh pr view
+gh pr merge
+```
+
+**Note**: The `gh` CLI tool should be used for all GitHub operations including creating and managing pull requests.
