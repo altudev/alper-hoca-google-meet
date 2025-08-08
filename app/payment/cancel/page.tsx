@@ -87,7 +87,7 @@ export default function PaymentCancelPage() {
                 </Button>
                 <Button asChild variant="secondary" size="sm" className="flex-1">
                   <Link href="/faq">
-                    SSS'ye Göz At
+                    {"SSS'ye Göz At"}
                   </Link>
                 </Button>
               </div>
