@@ -4,10 +4,13 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { XCircle, ArrowLeft, RefreshCw, HelpCircle } from "lucide-react"
+import Header from "@/components/Header"
 
 export default function PaymentCancelPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background dark:from-red-950/20 dark:to-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-background dark:from-red-950/20 dark:to-background">
+      <Header />
+      <div className="flex items-center justify-center px-4 py-16">
       <div className="max-w-2xl w-full">
         <Card className="shadow-xl">
           <CardHeader className="text-center">
@@ -104,6 +107,7 @@ export default function PaymentCancelPage() {
             </Link>
           </p>
         </div>
+      </div>
       </div>
     </div>
   )

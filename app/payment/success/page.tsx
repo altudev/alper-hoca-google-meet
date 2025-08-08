@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Home, Mail, FileText } from "lucide-react"
+import Header from "@/components/Header"
 
 export default function PaymentSuccessPage() {
   const searchParams = useSearchParams()
@@ -21,7 +22,9 @@ export default function PaymentSuccessPage() {
   }, [sessionId])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-background dark:from-green-950/20 dark:to-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-green-50 to-background dark:from-green-950/20 dark:to-background">
+      <Header />
+      <div className="flex items-center justify-center px-4 py-16">
       <div className="max-w-2xl w-full">
         <Card className="shadow-xl">
           <CardHeader className="text-center">
@@ -114,6 +117,7 @@ export default function PaymentSuccessPage() {
             </Link>
           </p>
         </div>
+      </div>
       </div>
     </div>
   )

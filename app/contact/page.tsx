@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Header from "@/components/Header"
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -48,6 +49,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <Header />
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}

@@ -5,6 +5,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { CreditCard, Shield, Zap, Check, Loader2 } from "lucide-react"
+import Header from "@/components/Header"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -99,6 +100,7 @@ export default function PaymentPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      <Header />
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
