@@ -3,6 +3,12 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Custom CSS variables for animation colors */
+:root {
+  --tw-color-slate-400: 148, 163, 184;
+  --tw-color-slate-400-alpha: rgba(148, 163, 184, 0.4);
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
