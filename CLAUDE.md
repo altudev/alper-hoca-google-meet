@@ -95,19 +95,85 @@ npm run lint
 - Images optimized with Next.js Image component
 - Fonts loaded with next/font
 
+## Critical Development Rules
+
+### ⚠️ TypeScript Type Safety - ABSOLUTELY NO "ANY" TYPES!
+**KULAĞINI ÇEKERİM!** - Never use the `any` type in TypeScript code. This is strictly forbidden!
+- Always provide proper type definitions
+- Use `unknown` if type is truly unknown, then narrow it down
+- Create interfaces or type aliases for complex types
+- Use generics when appropriate
+- If dealing with third-party libraries without types, create type definitions
+
+Examples of what NOT to do:
+```typescript
+// ❌ NEVER DO THIS - KULAĞINI ÇEKERİM!
+const data: any = fetchData();
+function processItem(item: any) { }
+const items: any[] = [];
+```
+
+Examples of correct typing:
+```typescript
+// ✅ CORRECT - Proper typing
+interface UserData {
+  id: string;
+  name: string;
+}
+const data: UserData = fetchData();
+function processItem(item: unknown) { 
+  // Type narrowing
+  if (typeof item === 'string') { }
+}
+const items: string[] = [];
+```
+
 ## Git Workflow
 
-**IMPORTANT**: After completing any task, you MUST automatically commit and push changes to the repository using the following workflow:
+### 🔄 Branch Strategy - EVERY FEATURE NEEDS A NEW BRANCH!
 
-1. Always check `git status` first to see what has changed
-2. Stage all relevant changes with `git add`
-3. Create descriptive commit messages that explain what was done
-4. Push changes to the remote repository
-5. If working on a feature branch, create a pull request using `gh pr create`
+**MANDATORY**: Every new task or feature MUST start with creating a new branch:
+
+1. **ALWAYS create a new branch for each feature/task**
+   ```bash
+   git checkout -b feature/feature-name
+   # or
+   git checkout -b fix/bug-description
+   # or
+   git checkout -b chore/task-description
+   ```
+
+2. **Branch naming conventions:**
+   - `feature/` - New features or enhancements
+   - `fix/` - Bug fixes
+   - `chore/` - Maintenance tasks, documentation
+   - `refactor/` - Code refactoring
+   - Use kebab-case for branch names
+
+3. **Complete workflow for EVERY task:**
+   ```bash
+   # 1. Start with creating a new branch
+   git checkout main
+   git pull origin main
+   git checkout -b feature/new-feature-name
+   
+   # 2. Make changes and commit
+   git add .
+   git commit -m "feat: descriptive message"
+   
+   # 3. Push branch
+   git push -u origin feature/new-feature-name
+   
+   # 4. Create PR
+   gh pr create --title "feat: Feature title" --body "Description"
+   ```
 
 ### GitHub CLI Commands
 
 ```bash
+# ALWAYS start with a new branch
+git checkout -b feature/branch-name
+
 # Check current branch and status
 git status
 git branch
@@ -115,11 +181,9 @@ git branch
 # Commit and push changes
 git add .
 git commit -m "feat: descriptive message about changes"
-git push origin main
-
-# For feature branches and pull requests
-git checkout -b feature/branch-name
 git push -u origin feature/branch-name
+
+# Create pull request
 gh pr create --title "PR Title" --body "Description of changes"
 
 # View and manage pull requests
@@ -127,5 +191,12 @@ gh pr list
 gh pr view
 gh pr merge
 ```
+
+**IMPORTANT RULES**:
+1. NEVER commit directly to main branch
+2. ALWAYS create a new branch for each feature
+3. ALWAYS create a PR for code review
+4. ALWAYS use descriptive branch names
+5. ALWAYS commit and push after completing a task
 
 **Note**: The `gh` CLI tool should be used for all GitHub operations including creating and managing pull requests.
